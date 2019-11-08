@@ -5,7 +5,7 @@ from p_library.models import Author
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'author')
 
 @admin.register(Author)
 class Author(admin.ModelAdmin):
