@@ -11,6 +11,18 @@
         <td>{{ book.year_release }}</td>
         <td>{{ book.author.full_name }}</td>
         <td>{{ book.author.country }}</td>
+        <td>
+            <form action="/index/book_increment/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{book.id}}" />
+                <input type="submit" value="Увеличить кол-во" />
+            </form>
+            <form action="/index/book_decrement/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{book.id}}" />
+                <input type="submit" value="Уменьшить кол-во" />
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
