@@ -15,17 +15,14 @@ def books_by_publisher(request):
     books_by_publisher = {}
     for book in books:
         if books_by_publisher.get(book.publisher.name) is None:
-            books_by_publisher[book.publisher.name] = [book.title]
+            books_by_publisher[book.publisher.name] = [book]
         else:
-            books_by_publisher[book.publisher.name].append(book.title)
-    
-    print(books_by_publisher)
+            books_by_publisher[book.publisher.name].append(book)
 
     biblio_data = {
         "books_by_publisher": books_by_publisher,
         }
-    return HttpResponse(books_by_publisher)
-    # return HttpResponse(template.render(biblio_data, request))
+    return HttpResponse(template.render(biblio_data, request))
 
 def index(request):
     template = loader.get_template('index.html')
