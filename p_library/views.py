@@ -9,8 +9,8 @@ def books_list(request):
     books = Book.objects.all()
     return HttpResponse(books)
 
-def books_by_publisher(request):
-    template = loader.get_template('books_by_publisher.html')
+def redactions(request):
+    template = loader.get_template('redactions.html')
     books = Book.objects.all()
     books_by_publisher = {}
     for book in books:
@@ -29,7 +29,6 @@ def index(request):
     books_count = Book.objects.all().count()
     books = Book.objects.all()
     biblio_data = {
-        "title": "мою библиотеку",
         "books_count": books_count,
         "books": books,
         }

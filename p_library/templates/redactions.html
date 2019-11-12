@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <title>Добро пожаловать в мою библиотеку!</title>
+</head>
+<body>
+    <div class="navbar navbar-default">
+        <div class="navbar-inner">
+            <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Главная</a></li>
+                <li class ="active"><a href="/redactions">Группировка по издательствам</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <h3>Список книг с группировкой по издательству</h3>
+        <ul class="list-group">
+            {% for publisher, books in books_by_publisher.items %}
+                <li class="list-group-item"><h2>{{ publisher }}</h2></li>
+                <ul class="list-group">
+                    {% for book in books %}
+                    <li class="list-group-item">{{ forloop.counter }}. {{ book.author }}. "{{ book.title }}"</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
