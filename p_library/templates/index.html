@@ -49,12 +49,12 @@
                     <td>{{ book.publisher }} </td>
                     <td>{{ book.copy_count }}</td>
                     <td>
-                        <form action="/index/book_increment/" method="post" enctype="multipart/form-data">
+                        <form action="/book_increment/" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{book.id}}" />
                             <input type="submit" value="Увеличить кол-во" />
                         </form>
-                        <form action="/index/book_decrement/" method="post" enctype="multipart/form-data">
+                        <form action="/book_decrement/" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{book.id}}" />
                             <input type="submit" value="Уменьшить кол-во" />
