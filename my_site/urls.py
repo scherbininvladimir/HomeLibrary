@@ -18,13 +18,12 @@ from django.urls import path, include
 from p_library import views
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('redactions/', views.redactions),
-    path('index/book_increment/', views.book_increment),
-    path('index/book_decrement/', views.book_decrement),
+    path('book_increment/', views.book_increment),
+    path('book_decrement/', views.book_decrement),
     path('', include('p_library.urls')),
 ]
 
