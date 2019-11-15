@@ -24,4 +24,7 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-
+class Mate(models.Model):
+    full_name = models.TextField()
+    def __str__(self):
+        return self.full_name

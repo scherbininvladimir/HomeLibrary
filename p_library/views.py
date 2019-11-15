@@ -7,8 +7,7 @@ from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
 
-from p_library.models import Book
-from p_library.models import Author
+from p_library.models import Book, Author, Mate
 from p_library.forms import AuthorForm, BookForm
 
 def books_list(request):
@@ -120,3 +119,15 @@ def books_authors_create_many(request):
 			'book_formset': book_formset,  
 		}  
 	)
+
+def lended_books(request):
+    template = loader.get_template('lended_books.html')
+    books_count = Book.objects.all().count()
+    books = Book.objects.all()
+    mates = Mate.objects.all()
+    biblio_data = {
+        "books_count": books_count,
+        "books": books,
+        "mates": mates,
+        }
+    return HttpResponse(template.render(biblio_data, request))
