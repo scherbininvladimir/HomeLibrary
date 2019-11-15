@@ -12,6 +12,11 @@ class Publisher(models.Model):
     def __str__(self):
         return self.name
 
+class Mate(models.Model):
+    full_name = models.TextField()
+    def __str__(self):
+        return self.full_name
+
 class Book(models.Model):  
     ISBN = models.CharField(max_length=13)  
     title = models.TextField()  
@@ -21,10 +26,6 @@ class Book(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0.00)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    mates = models.ManyToManyField(Mate, blank=True)
     def __str__(self):
         return self.title
-
-class Mate(models.Model):
-    full_name = models.TextField()
-    def __str__(self):
-        return self.full_name

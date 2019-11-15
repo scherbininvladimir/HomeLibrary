@@ -128,6 +128,15 @@
   <object model="p_library.publisher" pk="5">
     <field name="name" type="TextField">ТАМИЗДАТ</field>
   </object>
+  <object model="p_library.mate" pk="1">
+    <field name="full_name" type="TextField">Миша</field>
+  </object>
+  <object model="p_library.mate" pk="2">
+    <field name="full_name" type="TextField">Гриша</field>
+  </object>
+  <object model="p_library.mate" pk="3">
+    <field name="full_name" type="TextField">Мариша</field>
+  </object>
   <object model="p_library.book" pk="1">
     <field name="ISBN" type="CharField">9785170622207</field>
     <field name="title" type="TextField">The Growth of the Soil</field>
@@ -137,6 +146,7 @@
     <field name="price" type="DecimalField">939.70</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">6</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="3"></object></field>
   </object>
   <object model="p_library.book" pk="2">
     <field name="ISBN" type="CharField">9785931240053</field>
@@ -147,6 +157,7 @@
     <field name="price" type="DecimalField">789.15</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">2</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">1</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"></field>
   </object>
   <object model="p_library.book" pk="3">
     <field name="ISBN" type="CharField">9788588603271</field>
@@ -157,6 +168,7 @@
     <field name="price" type="DecimalField">2284.66</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">1</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">3</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="3"></object></field>
   </object>
   <object model="p_library.book" pk="4">
     <field name="ISBN" type="CharField">9789755630311</field>
@@ -167,6 +179,7 @@
     <field name="price" type="DecimalField">1884.04</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">2</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">1</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object></field>
   </object>
   <object model="p_library.book" pk="5">
     <field name="ISBN" type="CharField">9785457325753</field>
@@ -177,6 +190,7 @@
     <field name="price" type="DecimalField">2170.84</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">2</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">1</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"></field>
   </object>
   <object model="p_library.book" pk="6">
     <field name="ISBN" type="CharField">9781072923893</field>
@@ -187,6 +201,7 @@
     <field name="price" type="DecimalField">1644.10</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">3</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">3</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"></field>
   </object>
   <object model="p_library.book" pk="7">
     <field name="ISBN" type="CharField">9781447297017</field>
@@ -197,6 +212,7 @@
     <field name="price" type="DecimalField">2044.16</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">4</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object></field>
   </object>
   <object model="p_library.book" pk="8">
     <field name="ISBN" type="CharField">9783036959542</field>
@@ -207,6 +223,7 @@
     <field name="price" type="DecimalField">2092.53</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">4</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object></field>
   </object>
   <object model="p_library.book" pk="9">
     <field name="ISBN" type="CharField">9781447297017</field>
@@ -217,15 +234,7 @@
     <field name="price" type="DecimalField">803.60</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">5</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
-  </object>
-  <object model="p_library.mate" pk="1">
-    <field name="full_name" type="TextField">Миша</field>
-  </object>
-  <object model="p_library.mate" pk="2">
-    <field name="full_name" type="TextField">Гриша</field>
-  </object>
-  <object model="p_library.mate" pk="3">
-    <field name="full_name" type="TextField">Мариша</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
   </object>
   <object model="auth.permission" pk="1">
     <field name="name" type="CharField">Can add log entry</field>
@@ -575,5 +584,95 @@
     <field name="object_repr" type="CharField">Мариша</field>
     <field name="action_flag" type="PositiveSmallIntegerField">1</field>
     <field name="change_message" type="TextField">[{"added": {}}]</field>
+  </object>
+  <object model="admin.logentry" pk="16">
+    <field name="action_time" type="DateTimeField">2019-11-15T11:50:03.916949+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">9</field>
+    <field name="object_repr" type="CharField">The Catcher in the Rye</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="17">
+    <field name="action_time" type="DateTimeField">2019-11-15T11:50:31.672024+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">9</field>
+    <field name="object_repr" type="CharField">The Catcher in the Rye</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[]</field>
+  </object>
+  <object model="admin.logentry" pk="18">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:10:10.061739+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">8</field>
+    <field name="object_repr" type="CharField">So Long, and Thanks for All the Fish</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="19">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:10:50.585608+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">7</field>
+    <field name="object_repr" type="CharField">The Hitchhiker's Guide to the Galaxy</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="20">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:11:07.005863+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">3</field>
+    <field name="object_repr" type="CharField">Ревизор</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="21">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:11:15.929310+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">1</field>
+    <field name="object_repr" type="CharField">The Growth of the Soil</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="22">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:11:33.883352+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">4</field>
+    <field name="object_repr" type="CharField">Медный всадник</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="23">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:22:16.903300+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">9</field>
+    <field name="object_repr" type="CharField">The Catcher in the Rye</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="24">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:23:41.099383+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">9</field>
+    <field name="object_repr" type="CharField">The Catcher in the Rye</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="25">
+    <field name="action_time" type="DateTimeField">2019-11-15T12:28:26.620353+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">9</field>
+    <field name="object_repr" type="CharField">The Catcher in the Rye</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["mates"]}}]</field>
   </object>
 </django-objects>

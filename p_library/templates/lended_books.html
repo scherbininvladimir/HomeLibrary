@@ -14,14 +14,48 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Главная</a></li>
                 <li><a href="/redactions">Группировка по издательствам</a></li>
-                <li class="active"> <a href="/lended_books">Одолженные книги</a></li>
+                <li class="active"> <a href="/lended_books">Одолжение книг</a></li>
             </ul>
         </div>
     </div>
     <div class="container">
         <h3>Информация об одолженных книгах</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>У кого</th>
+                    <th>Дать почитать</th>
+                </tr>
+            </thead>
+            {% for book in books %}
+            <tr>
+                <td>
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    {{ book.title }}
+                </td>
+                <td>
+                    {{ book.author }}
+                </td>
+                <td>
+                        <!-- field.checked_count.all.count -->
+                    <p>{{ book.mates.all.count }}</p>
+                    {% for mate in book.mates.all %}
+                        <p>{{ mate }}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
         {% for book in books %}
             <p>{{ book }}</p>
+                {% for mate in book.mates.all %}
+                    <p>{{ book }} - {{ mate }}</p>
+                {% endfor %}
         {% endfor %}
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
