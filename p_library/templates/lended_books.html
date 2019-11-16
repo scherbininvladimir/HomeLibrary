@@ -27,6 +27,7 @@
                     <th>Название</th>
                     <th>Автор</th>
                     <th>У кого</th>
+                    <th>Дать почитать</th>
                 </tr>
             </thead>
             {% for book in books %}
@@ -44,9 +45,27 @@
                     {% ifequal book.mates.all.count 0 %}
                         <p style="color: green;">Дома</p>
                     {% endifequal %}
-                    {% for mate in book.mates.all %}
-                        <p style="color: red;">{{ mate }}</p>
-                    {% endfor %}
+                        {% for mate in book.mates.all %}
+                            <form action="/lended_books/return" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <lable>{{mate}}</lable>
+                                <input type="hidden" name="mate" value="{{mate.id}}" />
+                                <input type="hidden" name="book" value="{{book.id}}" />
+                                <input type="submit" value="x" />
+                            </form>
+                        {% endfor %}
+                </td>
+                <td>
+                    <form action="/lended_books/lend" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="book" value="{{book.id}}">
+                        <select name="mates">
+                            {% for mate in mates %}
+                                <option value="{{mate.id}}">{{mate}}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Сохранить" />
+                    </form>                          
                 </td>
             </tr>
             {% endfor %}

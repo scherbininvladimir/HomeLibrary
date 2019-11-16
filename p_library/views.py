@@ -7,12 +7,14 @@ from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
 
-from p_library.models import Book, Author
+from p_library.models import Book, Author, Mate
 from p_library.forms import AuthorForm, BookForm
+
 
 def books_list(request):
     books = Book.objects.all()
     return HttpResponse(books)
+
 
 def redactions(request):
     template = loader.get_template('redactions.html')
@@ -29,6 +31,7 @@ def redactions(request):
         }
     return HttpResponse(template.render(biblio_data, request))
 
+
 def index(request):
     template = loader.get_template('index.html')
     books_count = Book.objects.all().count()
@@ -38,6 +41,7 @@ def index(request):
         "books": books,
         }
     return HttpResponse(template.render(biblio_data, request))
+
 
 def book_increment(request):
     if request.method == 'POST':
@@ -73,16 +77,18 @@ def book_decrement(request):
     else:
         return redirect('/')
 
+
 class AuthorEdit(CreateView):  
     model = Author  
     form_class = AuthorForm  
     success_url = reverse_lazy('p_library:author_list')  
     template_name = 'authors_edit.html'  
-  
-  
+
+
 class AuthorList(ListView):  
     model = Author  
     template_name = 'authors_list.html'
+
 
 def author_create_many(request):  
     AuthorFormSet = formset_factory(AuthorForm, extra=2)  #  Первым делом, получим класс, который будет создавать наши формы. Обратите внимание на параметр `extra`, в данном случае он равен двум, это значит, что на странице с несколькими формами изначально будет появляться 2 формы создания авторов.
@@ -95,6 +101,7 @@ def author_create_many(request):
     else:  #  Если обработчик получил GET запрос, значит в ответ нужно просто "нарисовать" формы.
         author_formset = AuthorFormSet(prefix='authors')  #  Инициализируем формсет и ниже передаём его в контекст шаблона.
     return render(request, 'manage_authors.html', {'author_formset': author_formset})
+
 
 def books_authors_create_many(request):  
     AuthorFormSet = formset_factory(AuthorForm, extra=2)  
@@ -120,12 +127,45 @@ def books_authors_create_many(request):
 		}  
 	)
 
+
 def lended_books(request):
     template = loader.get_template('lended_books.html')
-    books_count = Book.objects.all().count()
     books = Book.objects.all()
+    mates = Mate.objects.all()
     biblio_data = {
-        "books_count": books_count,
         "books": books,
+        "mates": mates,
         }
     return HttpResponse(template.render(biblio_data, request))
+
+
+def return_lended_book(request):
+    if request.method == 'POST':
+        mate_id = request.POST['mate']
+        book_id = request.POST['book']
+        if not mate_id or not book_id:
+            return redirect('/lended_books')
+        else:
+            book = Book.objects.filter(id=book_id).first()
+            if not book:
+                return redirect('/lended_books')
+            book.mates.remove(mate_id)
+            book.save()
+        return redirect('/lended_books')
+    else:
+        return redirect('/lended_books')
+
+def lend(request):
+    if request.method == 'POST':
+        book_id = request.POST['book']
+        mate_id = request.POST['mates']
+        if not mate_id or not book_id:
+            return redirict('lended_books')
+        else:
+            book = Book.objects.filter(id=book_id).first()
+            if not book:
+                return redirect('/lended_books')
+            book.mates.add(mate_id)
+        return redirect('/lended_books')
+    else:
+        return redirect('/lended_books')
