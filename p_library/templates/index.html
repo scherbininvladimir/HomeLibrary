@@ -46,7 +46,10 @@
                     <td>{{ book.author.full_name }}</td>
                     <td>{{ book.author.country }}</td>
                     <td>{{ book.publisher }} </td>
-                    <td>{{ book.copy_count }}</td>
+                    <td>Всего&nbsp;экземпляров:&nbsp;{{ book.copy_count }}
+                        <br>
+                        У&nbsp;друзей:&nbsp;{{ book.mates.all.count }}                        
+                    </td>
                     <td>
                         <form action="/book_increment/" method="post" enctype="multipart/form-data">
                             {% csrf_token %}

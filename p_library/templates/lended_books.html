@@ -19,6 +19,13 @@
         </div>
     </div>
     <div class="container">
+        <h3>Добавить друга</h3>
+        <form action="/lended_books/add_mate" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Имя друга: </label>
+            <input name="mate_name" value=""/>
+            <input type="submit" value="Сохранить" />
+        </form>
         <h3>Информация об одолженных книгах</h3>
         <table class="table">
             <thead>

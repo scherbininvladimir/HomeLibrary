@@ -169,3 +169,15 @@ def lend(request):
         return redirect('/lended_books')
     else:
         return redirect('/lended_books')
+
+def add_mate(request):
+    if request.method == 'POST':
+        mate_name = request.POST['mate_name']
+        if not mate_name:
+            redirect('/lended_books')
+        else:
+            mate = Mate(full_name = mate_name)
+            mate.save()
+        return redirect('/lended_books')
+    else:
+        return redirect('/lended_books')
