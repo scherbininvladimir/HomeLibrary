@@ -1,7 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView
 from django.urls import reverse_lazy
 from django.forms import formset_factory
@@ -154,6 +153,7 @@ def return_lended_book(request):
         return redirect('/lended_books')
     else:
         return redirect('/lended_books')
+
 
 def lend(request):
     if request.method == 'POST':

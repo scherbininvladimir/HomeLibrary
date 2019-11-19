@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Главная</a></li>
                 <li><a href="/redactions">Группировка по издательствам</a></li>
-                <li class="active"> <a href="/lended_books">Одолжение книг</a></li>
+                <li class="active"> <a href="/lended_books">Одалживание книг</a></li>
             </ul>
         </div>
     </div>
@@ -42,8 +42,9 @@
                     {{ book.author }}
                 </td>
                 <td>
+
                     {% ifequal book.mates.all.count 0 %}
-                        <p style="color: green;">Дома</p>
+                        <p style="color: green;">Все экземпляры дома</p>
                     {% endifequal %}
                         {% for mate in book.mates.all %}
                             <form action="/lended_books/return" method="post" enctype="multipart/form-data">
@@ -56,16 +57,22 @@
                         {% endfor %}
                 </td>
                 <td>
-                    <form action="/lended_books/lend" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" name="book" value="{{book.id}}">
-                        <select name="mates">
-                            {% for mate in mates %}
-                                <option value="{{mate.id}}">{{mate}}</option>
-                            {% endfor %}
-                        </select>
-                        <input type="submit" value="Сохранить" />
-                    </form>                          
+                    {% if book.copy_count <= book.mates.all.count %}
+                      <p>Все экземпляры розданы</p>
+                    {% else %}
+                        <form action="/lended_books/lend" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="book" value="{{book.id}}">
+                            <select name="mates">
+                                {% for mate in mates %}
+                                    {% if mate not in book.mates.all %}
+                                        <option value="{{mate.id}}">{{mate}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="submit" value="Сохранить" />
+                        </form>
+                    {% endif %}                          
                 </td>
             </tr>
             {% endfor %}
