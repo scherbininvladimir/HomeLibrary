@@ -27,5 +27,6 @@ class Book(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     mates = models.ManyToManyField(Mate, blank=True)
+    cover = models.ImageField(upload_to='covers/%Y/%m/%d', blank=True)
     def __str__(self):
         return self.title

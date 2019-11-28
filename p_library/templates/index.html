@@ -9,6 +9,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>Обложка</th>
             <th>Название</th>
             <!-- <th>ISBN</th> -->
             <!-- <th>Аннотация</th> -->
@@ -23,6 +24,12 @@
         {% for book in books %}
         <tr>
             <td>{{ forloop.counter }}</td>
+            <td>
+                {% if book.cover %}
+                
+                <img src="{{ book.cover.url }}" alt="">
+                {% endif %}
+            </td>
             <td>{{ book.title }}</td>
             <!-- <td>{{ book.ISBN }}</td> -->
             <!-- <td>{{ book.description }}</td> -->
@@ -34,7 +41,7 @@
                 <br>
                 У&nbsp;друзей:&nbsp;{{ book.mates.all.count }}                        
             </td>
-            <td align="center">
+            <td style="text-align: center; vertical-align: middle;" >
                 <form action="/book_increment/" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="id" value="{{book.id}}" />
@@ -53,8 +60,10 @@
 {% endblock %}
 
 {% block script %}
+<script>
     $("li").removeClass("active");
     $("#menu-item-main").addClass("active");
+</script>
 {% endblock %}
 
 
