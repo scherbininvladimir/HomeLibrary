@@ -1,19 +1,28 @@
-body, html {
-    height: 100%;
-  }
-.bg {
-    /* The image used */
-    background-image: url("/static/images/bg-image.jpg");
-  
-    /* Full height */
-    height: 100%;
-  
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+body {
+  background: url('/static/images/bg-image.jpg') no-repeat center center fixed;  
+  background-size: cover;
+  color: white;
+}
 
-  .container {
-      width: 50%;
-  }
+.container-fluid {
+  color: white;
+}
+
+.dark-bg {
+  color: white;
+  background-color: black;
+  opacity: 0.75;
+}
+
+.space {
+  height: 3vh;
+}
+
+th,
+td {
+  color: white;
+}
+
+.wrapper {
+  padding: 5vw;
+}

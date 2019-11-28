@@ -1,90 +1,88 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <title>Добро пожаловать в мою библиотеку!</title>
-</head>
-<body>
-    <div class="navbar navbar-default">
-        <div class="navbar-inner">
-            <div class="container">
-            <ul class="nav navbar-nav">
-                <li><a href="/">Главная</a></li>
-                <li><a href="/redactions">Группировка по издательствам</a></li>
-                <li class="active"> <a href="/lended_books">Одалживание книг</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="container">
-        <h3>Добавить друга</h3>
-        <form action="/lended_books/add_mate" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label>Имя друга: </label>
-            <input name="mate_name" value=""/>
-            <input type="submit" value="Сохранить" />
-        </form>
-        <h3>Информация об одолженных книгах</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Название</th>
-                    <th>Автор</th>
-                    <th>У кого</th>
-                    <th>Дать почитать</th>
-                </tr>
-            </thead>
-            {% for book in books %}
-            <tr>
-                <td>
-                    {{ forloop.counter }}
-                </td>
-                <td>
-                    {{ book.title }}
-                </td>
-                <td>
-                    {{ book.author }}
-                </td>
-                <td>
+{% extends 'base.html' %}
 
-                    {% ifequal book.mates.all.count 0 %}
-                        <p style="color: green;">Все экземпляры дома</p>
-                    {% endifequal %}
-                        {% for mate in book.mates.all %}
-                            <form action="/lended_books/return" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <lable>{{mate}}</lable>
-                                <input type="hidden" name="mate" value="{{mate.id}}" />
-                                <input type="hidden" name="book" value="{{book.id}}" />
-                                <input type="submit" value="x" />
-                            </form>
-                        {% endfor %}
-                </td>
-                <td>
-                    {% if book.copy_count <= book.mates.all.count %}
-                      <p>Все экземпляры розданы</p>
-                    {% else %}
-                        <form action="/lended_books/lend" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="hidden" name="book" value="{{book.id}}">
-                            <select name="mates">
-                                {% for mate in mates %}
-                                    {% if mate not in book.mates.all %}
-                                        <option value="{{mate.id}}">{{mate}}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <input type="submit" value="Дать почитать" />
-                        </form>
-                    {% endif %}                          
-                </td>
+{% block content_1 %}
+<div class="wrapper">
+    <h3>Форма добавления друга в базу данных</h3>
+    <form action="/lended_books/add_mate" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Введите имя друга: </label>
+        <input name="mate_name" value=""/>
+        <input class="btn btn-outline-light" type="submit" value="Сохранить" />
+    </form>
+</div>
+{% endblock %}
+
+{% block content_2 %}
+<div class="wrapper">
+    <h3>Информация об одолженных книгах</h3>
+    <table class="table table-sm table-responsive">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>У кого</th>
+                <th>Дать почитать</th>
             </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-</body>
-</html>
+        </thead>
+        {% for book in books %}
+        <tr>
+            <td>
+                {{ forloop.counter }}
+            </td>
+            <td>
+                {{ book.title }}
+            </td>
+            <td>
+                {{ book.author }}
+            </td>
+            <td>
+                {% ifequal book.mates.all.count 0 %}
+                    <p>Все экземпляры дома</p>
+                {% endifequal %}
+                <table class="table table-sm table-borderless">
+                {% for mate in book.mates.all %}
+                    <tr>
+                        <td>
+                            {{ mate }}
+                        </td>
+                        <td> 
+                            <form action="/lended_books/return" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}    
+                                    <input type="hidden" name="mate" value="{{mate.id}}" />
+                                    <input type="hidden" name="book" value="{{book.id}}" />
+                                    <input class="btn btn-outline-light" type="submit" value="Вернуть" />
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </td>
+            <td>
+                {% if book.copy_count <= book.mates.all.count %}
+                    <p>Все экземпляры розданы</p>
+                {% else %}
+                    <form action="/lended_books/lend" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="book" value="{{book.id}}">
+                        <select name="mates">
+                            {% for mate in mates %}
+                                {% if mate not in book.mates.all %}
+                                    <option value="{{mate.id}}">{{mate}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <input class="btn btn-outline-light" type="submit" value="Дать почитать" />
+                    </form>
+                {% endif %}                          
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+{% block script %}
+    $("li").removeClass("active");
+    $("#menu-item-lended").addClass("active");
+{% endblock %}
