@@ -44,9 +44,17 @@
     <field name="session_data" type="TextField">MGEwNTQwMmMxOGI1MmViNmI2NjRjYzdmYWM5MTUzMzc0Yjk2OTkwYzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNjRjZWU3NDliOGQ5MjJmYzg5MmRkY2Y5ZTc3M2RmZDViYmJjZjI2In0=</field>
     <field name="expire_date" type="DateTimeField">2019-11-25T14:48:01.246174+00:00</field>
   </object>
+  <object model="sessions.session" pk="d5upuu6twynhz8sk94wc5qm4p5c2127q">
+    <field name="session_data" type="TextField">MGEwNTQwMmMxOGI1MmViNmI2NjRjYzdmYWM5MTUzMzc0Yjk2OTkwYzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNjRjZWU3NDliOGQ5MjJmYzg5MmRkY2Y5ZTc3M2RmZDViYmJjZjI2In0=</field>
+    <field name="expire_date" type="DateTimeField">2019-12-12T19:52:39.799837+00:00</field>
+  </object>
   <object model="sessions.session" pk="imw91f5jauwayvuf1rm60t1nukttl2oq">
     <field name="session_data" type="TextField">MGEwNTQwMmMxOGI1MmViNmI2NjRjYzdmYWM5MTUzMzc0Yjk2OTkwYzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNjRjZWU3NDliOGQ5MjJmYzg5MmRkY2Y5ZTc3M2RmZDViYmJjZjI2In0=</field>
     <field name="expire_date" type="DateTimeField">2019-11-29T07:47:59.826936+00:00</field>
+  </object>
+  <object model="sessions.session" pk="u17dj1ubezxsczdhdjxe2t1nk1ci3fly">
+    <field name="session_data" type="TextField">MGEwNTQwMmMxOGI1MmViNmI2NjRjYzdmYWM5MTUzMzc0Yjk2OTkwYzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJmNjRjZWU3NDliOGQ5MjJmYzg5MmRkY2Y5ZTc3M2RmZDViYmJjZjI2In0=</field>
+    <field name="expire_date" type="DateTimeField">2019-12-11T09:07:12.166581+00:00</field>
   </object>
   <object model="p_library.author" pk="1">
     <field name="full_name" type="TextField">Николай Васильевич Гоголь</field>
@@ -137,6 +145,15 @@
   <object model="p_library.mate" pk="3">
     <field name="full_name" type="TextField">Мариша</field>
   </object>
+  <object model="p_library.mate" pk="4">
+    <field name="full_name" type="TextField">Маша</field>
+  </object>
+  <object model="p_library.mate" pk="5">
+    <field name="full_name" type="TextField">Даша</field>
+  </object>
+  <object model="p_library.mate" pk="6">
+    <field name="full_name" type="TextField">Аглаша</field>
+  </object>
   <object model="p_library.book" pk="1">
     <field name="ISBN" type="CharField">9785170622207</field>
     <field name="title" type="TextField">The Growth of the Soil</field>
@@ -146,29 +163,32 @@
     <field name="price" type="DecimalField">939.70</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">6</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object></field>
+    <field name="cover" type="FileField">covers/2019/11/28/TheGrowthOfTheSoil.jpeg</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"></field>
   </object>
   <object model="p_library.book" pk="2">
     <field name="ISBN" type="CharField">9785931240053</field>
     <field name="title" type="TextField">Руслан и Людмила</field>
     <field name="description" type="TextField">Волшебная сказка, вдохновлённая древнерусскими былинами.</field>
     <field name="year_release" type="SmallIntegerField">1820</field>
-    <field name="copy_count" type="SmallIntegerField">1</field>
+    <field name="copy_count" type="SmallIntegerField">2</field>
     <field name="price" type="DecimalField">789.15</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">2</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">1</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object></field>
+    <field name="cover" type="FileField">covers/2019/11/28/shopping.jpeg</field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"></field>
   </object>
   <object model="p_library.book" pk="3">
     <field name="ISBN" type="CharField">9788588603271</field>
     <field name="title" type="TextField">Ревизор</field>
     <field name="description" type="TextField">Комедия в пяти действиях русского писателя Николая Васильевича Гоголя.</field>
     <field name="year_release" type="SmallIntegerField">1835</field>
-    <field name="copy_count" type="SmallIntegerField">3</field>
+    <field name="copy_count" type="SmallIntegerField">2</field>
     <field name="price" type="DecimalField">2284.66</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">1</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">3</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
+    <field name="cover" type="FileField"></field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object></field>
   </object>
   <object model="p_library.book" pk="4">
     <field name="ISBN" type="CharField">9789755630311</field>
@@ -179,7 +199,8 @@
     <field name="price" type="DecimalField">1884.04</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">2</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">1</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
+    <field name="cover" type="FileField"></field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object></field>
   </object>
   <object model="p_library.book" pk="5">
     <field name="ISBN" type="CharField">9785457325753</field>
@@ -190,7 +211,8 @@
     <field name="price" type="DecimalField">2170.84</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">2</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">1</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="3"></object></field>
+    <field name="cover" type="FileField"></field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"></field>
   </object>
   <object model="p_library.book" pk="6">
     <field name="ISBN" type="CharField">9781072923893</field>
@@ -201,7 +223,8 @@
     <field name="price" type="DecimalField">1644.10</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">3</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">3</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
+    <field name="cover" type="FileField"></field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object></field>
   </object>
   <object model="p_library.book" pk="7">
     <field name="ISBN" type="CharField">9781447297017</field>
@@ -212,7 +235,8 @@
     <field name="price" type="DecimalField">2044.16</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">4</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
+    <field name="cover" type="FileField"></field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object></field>
   </object>
   <object model="p_library.book" pk="8">
     <field name="ISBN" type="CharField">9783036959542</field>
@@ -223,7 +247,8 @@
     <field name="price" type="DecimalField">2092.53</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">4</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
-    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
+    <field name="cover" type="FileField"></field>
+    <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="2"></object></field>
   </object>
   <object model="p_library.book" pk="9">
     <field name="ISBN" type="CharField">9781447297017</field>
@@ -234,6 +259,7 @@
     <field name="price" type="DecimalField">803.60</field>
     <field name="author" rel="ManyToOneRel" to="p_library.author">5</field>
     <field name="publisher" rel="ManyToOneRel" to="p_library.publisher">5</field>
+    <field name="cover" type="FileField"></field>
     <field name="mates" rel="ManyToManyRel" to="p_library.mate"><object pk="1"></object><object pk="2"></object><object pk="3"></object></field>
   </object>
   <object model="auth.permission" pk="1">
@@ -438,7 +464,7 @@
   </object>
   <object model="auth.user" pk="1">
     <field name="password" type="CharField">pbkdf2_sha256$150000$Rt3XPPjswWLq$dOzTy2kln9h+AcO4lv5yCRC+n53blgkuUPJRCVNd+KM=</field>
-    <field name="last_login" type="DateTimeField">2019-11-15T07:47:59.822803+00:00</field>
+    <field name="last_login" type="DateTimeField">2019-11-28T19:52:39.796014+00:00</field>
     <field name="is_superuser" type="BooleanField">True</field>
     <field name="username" type="CharField">admin</field>
     <field name="first_name" type="CharField"></field>
@@ -751,5 +777,23 @@
     <field name="object_repr" type="CharField">user_1</field>
     <field name="action_flag" type="PositiveSmallIntegerField">2</field>
     <field name="change_message" type="TextField">[{"changed": {"fields": ["is_staff", "user_permissions"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="33">
+    <field name="action_time" type="DateTimeField">2019-11-28T19:53:52.952043+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">2</field>
+    <field name="object_repr" type="CharField">Руслан и Людмила</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["cover"]}}]</field>
+  </object>
+  <object model="admin.logentry" pk="34">
+    <field name="action_time" type="DateTimeField">2019-11-28T20:14:18.323077+00:00</field>
+    <field name="user" rel="ManyToOneRel" to="auth.user">1</field>
+    <field name="content_type" rel="ManyToOneRel" to="contenttypes.contenttype">8</field>
+    <field name="object_id" type="TextField">1</field>
+    <field name="object_repr" type="CharField">The Growth of the Soil</field>
+    <field name="action_flag" type="PositiveSmallIntegerField">2</field>
+    <field name="change_message" type="TextField">[{"changed": {"fields": ["cover"]}}]</field>
   </object>
 </django-objects>
