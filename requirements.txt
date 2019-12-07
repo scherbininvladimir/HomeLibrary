@@ -3,3 +3,4 @@ Pillow==6.2.1
 pytz==2019.3
 sqlparse==0.3.0
 django-allauth==0.40.0
+dj_database_url
