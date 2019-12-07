@@ -15,7 +15,7 @@
             <div class="col-12 dark-bg">
                 <nav class="navbar navbar-expand navbar-dark bg-transparent">
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav mr-auto">
                         <li id="menu-item-main" class="nav-item">
                             <a  class="nav-link" href="/">Главная</span></a>
                         </li>
@@ -26,6 +26,13 @@
                             <a class="nav-link" href="/lended_books">Одалживание книг</a>
                         </li>
                         </ul>
+                        <div class="userlogin mr-right">
+                            {% if username %}  
+                                <small>Привет, {{ username }}! <a style="color: white; text-decoration: none;" href='/logout'>Выйти</a></small>
+                            {% else %}  
+                                <small><a style="color: white; text-decoration: none;" href="/login">Войти</a></small>
+                            {% endif %}  
+                        </div>
                     </div>
                 </nav>
             </div>

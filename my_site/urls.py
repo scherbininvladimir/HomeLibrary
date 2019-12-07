@@ -22,11 +22,11 @@ from p_library import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
     path('redactions/', views.redactions),
     path('book_increment/', views.book_increment),
     path('book_decrement/', views.book_decrement),
     path('', include('p_library.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

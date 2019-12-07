@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm  
+from django.contrib.auth import login, authenticate  
 from django.http import HttpResponse
 from django.template import loader
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, FormView
 from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
 
 from p_library.models import Book, Author, Mate
-from p_library.forms import AuthorForm, BookForm
-
+from p_library.forms import AuthorForm, BookForm, ProfileCreationForm
 
 def books_list(request):
     books = Book.objects.all()
@@ -39,6 +40,8 @@ def index(request):
         "books_count": books_count,
         "books": books,
         }
+    if request.user.is_authenticated:
+        biblio_data['username'] = request.user.username
     return HttpResponse(template.render(biblio_data, request))
 
 
@@ -181,3 +184,32 @@ def add_mate(request):
         return redirect('/lended_books')
     else:
         return redirect('/lended_books')
+
+class RegisterView(FormView):  
+  
+    form_class = UserCreationForm  
+  
+    def form_valid(self, form):  
+        form.save()  
+        username = form.cleaned_data.get('username')  
+        raw_password = form.cleaned_data.get('password1')  
+        login(self.request, authenticate(username=username, password=raw_password))  
+        return super(RegisterView, self).form_valid(form) 
+
+class CreateUserProfile(FormView):
+    template_name = 'profile-create.html'
+    form_class = ProfileCreationForm
+    success_url = reverse_lazy('p_library:index')
+
+    def dispatch(self, request, *args, **kwargs):  
+        if self.request.user.is_anonymous:  
+            return HttpResponseRedirect(reverse_lazy('p_library:login'))  
+        return super(CreateUserProfile, self).dispatch(request, *args, **kwargs)  
+  
+    def form_valid(self, form):  
+        instance = form.save(commit=False)
+        instance.extra_data['age'] = self.request.POST['age']
+        instance.extra_data['site'] = self.request.POST['site']
+        instance.user = self.request.user  
+        instance.save()  
+        return super(CreateUserProfile, self).form_valid(form)
