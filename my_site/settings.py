@@ -142,3 +142,5 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = reverse_lazy('p_library:index')
 
 LOGOUT_REDIRECT_URL = reverse_lazy('p_library:index')
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
