@@ -2,11 +2,11 @@
 
 {% block content_1 %}
 
-<div class="wrapper">
+<div class="wrapper" style="text-align: left;">
     <form method="post">  
         {% csrf_token %}  
-          {{ form.as_ul }}  
-          <input type="submit" value="Зарегистрироваться">  
+          {{ form.as_p }}  
+          <input class="btn btn-outline-light" type="submit" value="Зарегистрироваться">  
     </form>      
 </div>
 
