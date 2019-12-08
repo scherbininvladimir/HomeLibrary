@@ -35,7 +35,7 @@ def redactions(request):
 def index(request):
     template = loader.get_template('index.html')
     books_count = Book.objects.all().count()
-    books = Book.objects.all()
+    books = Book.objects.all().order_by('title')
     biblio_data = {
         "books_count": books_count,
         "books": books,
@@ -132,7 +132,7 @@ def books_authors_create_many(request):
 
 def lended_books(request):
     template = loader.get_template('lended_books.html')
-    books = Book.objects.all()
+    books = Book.objects.all().order_by('title')
     mates = Mate.objects.all()
     biblio_data = {
         "books": books,
