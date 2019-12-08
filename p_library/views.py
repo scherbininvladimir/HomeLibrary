@@ -29,6 +29,8 @@ def redactions(request):
     biblio_data = {
         "books_by_publisher": books_by_publisher,
         }
+    if request.user.is_authenticated:
+        biblio_data['username'] = request.user.username
     return HttpResponse(template.render(biblio_data, request))
 
 
@@ -138,6 +140,8 @@ def lended_books(request):
         "books": books,
         "mates": mates,
         }
+    if request.user.is_authenticated:
+        biblio_data['username'] = request.user.username
     return HttpResponse(template.render(biblio_data, request))
 
 
