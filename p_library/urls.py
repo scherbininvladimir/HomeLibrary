@@ -3,7 +3,7 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from allauth.account.views import login, logout
 
-from .views import index, AuthorEdit, AuthorList, author_create_many, books_authors_create_many, lended_books, return_lended_book, lend, add_mate, RegisterView, CreateUserProfile
+from .views import index, AuthorEdit, AuthorList, author_create_many, books_authors_create_many, lended_books, return_lended_book, lend, add_mate, RegisterView, UpdateUserProfile
 
 app_name = 'p_library'  
 urlpatterns = [
@@ -21,6 +21,6 @@ urlpatterns = [
         template_name='register.html',  
 		success_url=reverse_lazy('p_library:profile-create')  
     ), name='register'),  
-    path('profile-create/', CreateUserProfile.as_view(), name='profile-create'),
+    path('profile-update/<int:pk>/', UpdateUserProfile.as_view(), name='profile-update'),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]
