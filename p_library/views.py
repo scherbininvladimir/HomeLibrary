@@ -3,10 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate  
 from django.http import HttpResponse
 from django.template import loader
-from django.views.generic import CreateView, ListView, FormView
+from django.views.generic import CreateView, ListView, FormView, UpdateView
 from django.urls import reverse_lazy
 from django.forms import formset_factory
 from django.http.response import HttpResponseRedirect
+
+from django.forms.models import model_to_dict
+
+from allauth.socialaccount.models import SocialAccount
 
 from p_library.models import Book, Author, Mate
 from p_library.forms import AuthorForm, BookForm, ProfileCreationForm
@@ -200,20 +204,56 @@ class RegisterView(FormView):
         login(self.request, authenticate(username=username, password=raw_password))  
         return super(RegisterView, self).form_valid(form) 
 
-class CreateUserProfile(FormView):
+# class CreateUserProfile(FormView):
+#     template_name = 'profile-create.html'
+#     model = SocialAccount
+#     form_class = ProfileCreationForm
+#     success_url = reverse_lazy('p_library:index')
+
+#     def get_initial(self):
+#         sa_user = SocialAccount.objects.filter(user=self.request.user).first()
+#         initial = model_to_dict(sa_user) 
+#         return initial
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["username"] = self.request.user.username
+#         return context
+
+#     def dispatch(self, request, *args, **kwargs):  
+#         if self.request.user.is_anonymous:  
+#             return HttpResponseRedirect(reverse_lazy('p_library:index'))  
+#         return super(CreateUserProfile, self).dispatch(request, *args, **kwargs)  
+  
+#     def form_valid(self, form):  
+#         instance = form.save(commit=False)
+#         instance.extra_data['age'] = self.request.POST['age']
+#         instance.extra_data['site'] = self.request.POST['site']
+#         instance.save()  
+#         return super(CreateUserProfile, self).form_valid(form)
+
+class CreateUserProfile(UpdateView):
     template_name = 'profile-create.html'
+    model = SocialAccount
     form_class = ProfileCreationForm
     success_url = reverse_lazy('p_library:index')
 
-    def dispatch(self, request, *args, **kwargs):  
-        if self.request.user.is_anonymous:  
-            return HttpResponseRedirect(reverse_lazy('p_library:login'))  
-        return super(CreateUserProfile, self).dispatch(request, *args, **kwargs)  
-  
+    def get_initial(self):
+        initial = {}
+        initial['age'] = self.object.extra_data.get('age', '')
+        initial['site'] = self.object.extra_data.get('site', '')
+        return initial
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["username"] = self.request.user.username
+        sa_data = SocialAccount.objects.filter(user=self.request.user).first()
+        context["sa_id"] = sa_data.id
+        return context
+
     def form_valid(self, form):  
         instance = form.save(commit=False)
         instance.extra_data['age'] = self.request.POST['age']
         instance.extra_data['site'] = self.request.POST['site']
-        instance.user = self.request.user  
         instance.save()  
         return super(CreateUserProfile, self).form_valid(form)
