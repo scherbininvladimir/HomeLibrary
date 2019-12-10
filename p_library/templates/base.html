@@ -30,8 +30,8 @@
                             {% if username %}  
                                 <small>
                                     Привет, {{ username }}! 
-                                    <a style="color: white; text-decoration: none;" href="/profile-update">Редактировать профиль</a> 
-                                    <a style="color: white; text-decoration: none;" href='/logout'>Выйти ({{ sa_id }})</a> 
+                                    <a style="color: white; text-decoration: none;" href="/profile-update/{{ sa_id }}">Редактировать профиль</a> 
+                                    <a style="color: white; text-decoration: none;" href='/logout'>Выйти</a> 
                                 </small>
                             {% else %}  
                                 <small><a style="color: white; text-decoration: none;" href="/accounts/github/login/?process=login">Войти через GitHub</a></small>

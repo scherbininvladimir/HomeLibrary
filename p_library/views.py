@@ -13,7 +13,7 @@ from django.forms.models import model_to_dict
 from allauth.socialaccount.models import SocialAccount
 
 from p_library.models import Book, Author, Mate
-from p_library.forms import AuthorForm, BookForm, ProfileCreationForm
+from p_library.forms import AuthorForm, BookForm, ProfileUpdateForm
 
 def books_list(request):
     books = Book.objects.all()
@@ -34,6 +34,8 @@ def redactions(request):
         "books_by_publisher": books_by_publisher,
         }
     if request.user.is_authenticated:
+        sa_data = SocialAccount.objects.filter(user=request.user).first()
+        biblio_data["sa_id"] = sa_data.id
         biblio_data['username'] = request.user.username
     return HttpResponse(template.render(biblio_data, request))
 
@@ -47,6 +49,8 @@ def index(request):
         "books": books,
         }
     if request.user.is_authenticated:
+        sa_data = SocialAccount.objects.filter(user=request.user).first()
+        biblio_data["sa_id"] = sa_data.id
         biblio_data['username'] = request.user.username
     return HttpResponse(template.render(biblio_data, request))
 
@@ -145,6 +149,8 @@ def lended_books(request):
         "mates": mates,
         }
     if request.user.is_authenticated:
+        sa_data = SocialAccount.objects.filter(user=request.user).first()
+        biblio_data["sa_id"] = sa_data.id
         biblio_data['username'] = request.user.username
     return HttpResponse(template.render(biblio_data, request))
 
@@ -204,38 +210,11 @@ class RegisterView(FormView):
         login(self.request, authenticate(username=username, password=raw_password))  
         return super(RegisterView, self).form_valid(form) 
 
-# class CreateUserProfile(FormView):
-#     template_name = 'profile-create.html'
-#     model = SocialAccount
-#     form_class = ProfileCreationForm
-#     success_url = reverse_lazy('p_library:index')
 
-#     def get_initial(self):
-#         sa_user = SocialAccount.objects.filter(user=self.request.user).first()
-#         initial = model_to_dict(sa_user) 
-#         return initial
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["username"] = self.request.user.username
-#         return context
-
-#     def dispatch(self, request, *args, **kwargs):  
-#         if self.request.user.is_anonymous:  
-#             return HttpResponseRedirect(reverse_lazy('p_library:index'))  
-#         return super(CreateUserProfile, self).dispatch(request, *args, **kwargs)  
-  
-#     def form_valid(self, form):  
-#         instance = form.save(commit=False)
-#         instance.extra_data['age'] = self.request.POST['age']
-#         instance.extra_data['site'] = self.request.POST['site']
-#         instance.save()  
-#         return super(CreateUserProfile, self).form_valid(form)
-
-class CreateUserProfile(UpdateView):
-    template_name = 'profile-create.html'
+class UpdateUserProfile(UpdateView):
+    template_name = 'profile-update.html'
     model = SocialAccount
-    form_class = ProfileCreationForm
+    form_class = ProfileUpdateForm
     success_url = reverse_lazy('p_library:index')
 
     def get_initial(self):
@@ -256,4 +235,11 @@ class CreateUserProfile(UpdateView):
         instance.extra_data['age'] = self.request.POST['age']
         instance.extra_data['site'] = self.request.POST['site']
         instance.save()  
-        return super(CreateUserProfile, self).form_valid(form)
+        return super(UpdateUserProfile, self).form_valid(form)
+
+    def form_valid(self, form):  
+        instance = form.save(commit=False)
+        instance.extra_data['age'] = self.request.POST['age']
+        instance.extra_data['site'] = self.request.POST['site']
+        instance.save()  
+        return super(UpdateUserProfile, self).form_valid(form)

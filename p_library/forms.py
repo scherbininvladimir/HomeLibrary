@@ -17,10 +17,10 @@ class BookForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ProfileCreationForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):
     age = forms.IntegerField()
     site = forms.CharField(widget=forms.TextInput)
 
     class Meta:
         model = SocialAccount
-        fields = '__all__'
+        fields = ['extra_data']
