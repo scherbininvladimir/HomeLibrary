@@ -21,6 +21,6 @@ urlpatterns = [
         template_name='register.html',  
 		success_url=reverse_lazy('p_library:profile-create')  
     ), name='register'),  
-    path('profile-create/', CreateUserProfile.as_view(), name='profile-create'),
+    path('profile-update/<int:pk>/', CreateUserProfile.as_view(), name='profile-create'),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]

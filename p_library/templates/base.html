@@ -28,9 +28,13 @@
                         </ul>
                         <div class="userlogin mr-right">
                             {% if username %}  
-                                <small>Привет, {{ username }}! <a style="color: white; text-decoration: none;" href='/logout'>Выйти</a></small>
+                                <small>
+                                    Привет, {{ username }}! 
+                                    <a style="color: white; text-decoration: none;" href="/profile-update">Редактировать профиль</a> 
+                                    <a style="color: white; text-decoration: none;" href='/logout'>Выйти ({{ sa_id }})</a> 
+                                </small>
                             {% else %}  
-                                <small><a style="color: white; text-decoration: none;" href="/login">Войти</a></small>
+                                <small><a style="color: white; text-decoration: none;" href="/accounts/github/login/?process=login">Войти через GitHub</a></small>
                             {% endif %}  
                         </div>
                     </div>
@@ -43,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col"></div>
-            <div class="col-auto dark-bg">
+            <div class="col-auto dark-bg"> 
                 {% block content_1 %}
                 {% endblock %}
             </div>
